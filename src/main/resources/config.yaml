@@ -1,0 +1,12 @@
+sapiConnector:
+  host: ""
+  port: ""
+  protocol: ""
+  basepath: ""
+  timeout: ""
+gcpConnector:
+  host: ""
+  port: ""
+  protocol: ""
+  basepath: ""
+  timeout: ""

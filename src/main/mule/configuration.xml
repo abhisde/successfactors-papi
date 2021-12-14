@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:gcpsapi="http://www.mulesoft.org/schema/mule/gcpsapi" xmlns:gc-psapi="http://www.mulesoft.org/schema/mule/gc-psapi"
+	xmlns:creatinganew-ap-itofetchdatafrom-success-factors="http://www.mulesoft.org/schema/mule/creatinganew-ap-itofetchdatafrom-success-factors"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/creatinganew-ap-itofetchdatafrom-success-factors http://www.mulesoft.org/schema/mule/creatinganew-ap-itofetchdatafrom-success-factors/current/mule-creatinganew-ap-itofetchdatafrom-success-factors.xsd
+http://www.mulesoft.org/schema/mule/gc-psapi http://www.mulesoft.org/schema/mule/gc-psapi/current/mule-gc-psapi.xsd
+http://www.mulesoft.org/schema/mule/gcpsapi http://www.mulesoft.org/schema/mule/gcpsapi/current/mule-gcpsapi.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="0465e328-97d8-49fe-ae27-c4c89d5f77c8" >
+		<http:listener-connection host="0.0.0.0" port="8083" />
+	</http:listener-config>
+	<creatinganew-ap-itofetchdatafrom-success-factors:config name="SuccessFactors_API_Config" doc:name="Creating a new API to fetch data from SuccessFactors Config" doc:id="78149f34-d8d1-44f3-b2e1-2c2545a2092a" property_host="${sapiConnector.host}" property_port="${sapiConnector.port}" property_protocol="${sapiConnector.protocol}" property_basePath="${sapiConnector.basepath}" property_responseTimeout="${sapiConnector.timeout}" />
+	<configuration-properties doc:name="Configuration properties" doc:id="b6e340d8-499a-4fc8-bd0a-16ee37068259" file="config.yaml" />
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="4e80a8e2-1937-4ee2-8147-fe78efbec793" >
+		<http:request-connection host="localhost" port="8081" />
+	</http:request-config>
+	<gcpsapi:config name="GCP_SAPI_Config" doc:name="GCP SAPI Config" doc:id="e9a0c3d9-e1a8-4c76-9cff-7351fb692eb9" property_host="${gcpConnector.host}" property_port="${gcpConnector.port}" property_protocol="${gcpConnector.protocol}" property_basePath="${gcpConnector.basepath}" property_responseTimeout="${gcpConnector.timeout}"/>
+</mule>

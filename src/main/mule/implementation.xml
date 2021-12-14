@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:gcpsapi="http://www.mulesoft.org/schema/mule/gcpsapi" xmlns:gc-psapi="http://www.mulesoft.org/schema/mule/gc-psapi"
+	xmlns:creatinganew-ap-itofetchdatafrom-success-factors="http://www.mulesoft.org/schema/mule/creatinganew-ap-itofetchdatafrom-success-factors"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/creatinganew-ap-itofetchdatafrom-success-factors http://www.mulesoft.org/schema/mule/creatinganew-ap-itofetchdatafrom-success-factors/current/mule-creatinganew-ap-itofetchdatafrom-success-factors.xsd
+http://www.mulesoft.org/schema/mule/gc-psapi http://www.mulesoft.org/schema/mule/gc-psapi/current/mule-gc-psapi.xsd
+http://www.mulesoft.org/schema/mule/gcpsapi http://www.mulesoft.org/schema/mule/gcpsapi/current/mule-gcpsapi.xsd">
+	<flow name="getEmployeesHTTP" doc:id="0c166b6c-87b4-4434-8c1f-3f51d9b7cda3" >
+		<http:request method="GET" doc:name="Request" doc:id="9a553a2f-c376-488b-8766-aa719e431cf4" path="/api/employee" responseTimeout="300000" config-ref="HTTP_Request_configuration"/>
+		<ee:transform doc:name="Transform Message" doc:id="627efe12-15f3-4d4b-a753-eff5571d9188" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var dataType = {"type": "employee"}
+---
+dataType ++ {data: payload } ]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="getEmployees" doc:id="9c0c5e1d-d0e5-4490-8364-365d21c6afbb" >
+		<creatinganew-ap-itofetchdatafrom-success-factors:get-all-employees-information doc:name="Get All Employees information" doc:id="203e021e-0b26-43f7-a46d-dabbefdbe6a3" config-ref="SuccessFactors_API_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="797f7887-c578-44a3-83c1-ed096d36bbe0" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var dataType = {"type": "employee"}
+---
+dataType ++ {data: payload } ]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<gcpsapi:create-object doc:name="Create Object" doc:id="51e63dc3-ce5c-49fe-a20d-1959adcf90c4" config-ref="GCP_SAPI_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="0af7f12e-1037-4e9e-8919-b4b3e69ec205" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message: attributes.statusCode}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="Copy_of_getEmployees" doc:id="25ff3b95-9e7b-47b4-a2c9-f47b2097e866" >
+		<creatinganew-ap-itofetchdatafrom-success-factors:get-all-employees-information doc:name="Copy_of_Get All Employees information" doc:id="955f51b8-3510-429b-9fa1-552239120e6b" config-ref="SuccessFactors_API_Config" />
+		<ee:transform doc:name="Copy_of_Transform Message" doc:id="fad03e24-00e1-4220-ae41-f816fe9519e1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var dataType = {"type": "employee"}
+---
+dataType ++ {data: payload } ]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="52a61744-1dd6-42fe-b3eb-27e86f5182d6" />
+	</flow>
+</mule>

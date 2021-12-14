@@ -1,0 +1,8 @@
+%dw 2.0
+
+type auto_9c0c5e1d_d0e5_4490_8364_365d21c6afbb_Output_Payload = {
+  data: Array<{    country: String,     zipCode: Number,     hireDate: String,     city: String,     fullName: String,     jobCode: String,     userId: String,     addressLine1: String,     addressLine2: String,     state: String,     department: String,     email: String,     username: String,     status: String,     _?: Any  }>, 
+  dataType: String, 
+  _?: Any
+}
+
